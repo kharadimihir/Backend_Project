@@ -2,12 +2,12 @@
 // If we get promises then we have to use .then.Catch method to handle errror
 
 const asyncHandler = (requsetHandler) => {
-    Promise.resolve(requsetHandler(req, res, next)).catch((error) => next(error))
+   return (req, res, next) => {
+    Promise.resolve(requsetHandler(req, res, next)).catch((err) => next(err));
+   }
+
 }
-
-
 export {asyncHandler}
-
 
 
 
