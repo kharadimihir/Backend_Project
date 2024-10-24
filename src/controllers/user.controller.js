@@ -15,11 +15,11 @@ const registerUser = asyncHandler( async (req, res) => {
     // return res
 
     const { fullName, email, password, username} = req.body;
-    console.log(email);
+    console.log(email, fullName, password, username);
 
-    // if (fullName === "") {
-    //     throw new ApiError(400, "All fields are required"); 
-    // }
+    if (fullName === "") {
+        throw new ApiError(400, "All fields are required"); 
+    }
 
 
     // How to handle user deatails [username, fullname, password, email]
@@ -28,7 +28,7 @@ const registerUser = asyncHandler( async (req, res) => {
     }
 
     // How to check whether the user already exists or not
-    const existedUser = User.findOne({
+    const existedUser = await User.findOne({
         $or: [{ username }, { email }]
     });
 
@@ -36,8 +36,14 @@ const registerUser = asyncHandler( async (req, res) => {
         throw new ApiError(409, "User with this email or username is already exists");
     }
 
+    console.log(req.files);
     //How to handle cover iamges or avatar
+    //if (!req.files || !req.files.avatar || !req.files.avatar[0]) {
+    //    throw new ApiError(400, "Avatar file is missing");
+    //}
     const avatarLocalPath = req.files?.avatar[0]?.path;
+    console.log(avatarLocalPath);
+    
     const coverImageLocalPath = req.files?.coverImage[0]?.path;
 
     //Check whether the avatar is properly sets or not
