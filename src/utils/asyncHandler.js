@@ -1,9 +1,9 @@
 
 // If we get promises then we have to use .then.Catch method to handle errror
 
-const asyncHandler = (requsetHandler) => {
+const asyncHandler = (requestHandler) => {
    return (req, res, next) => {
-    Promise.resolve(requsetHandler(req, res, next)).catch((err) => next(err));
+    Promise.resolve(requestHandler(req, res, next)).catch((err) => next(err));
    }
 
 }
