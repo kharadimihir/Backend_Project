@@ -1,7 +1,6 @@
 import { ApiError } from "../utils/errorsApi.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
-import { User } from "../models/user.model.js";
 import Tweet from "../models/tweet.model.js"
 
 

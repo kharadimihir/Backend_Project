@@ -4,7 +4,7 @@ import mongoose, { Schema } from "mongoose";
 const likeSchema = new Schema({
     comment: {
         type: Schema.Types.ObjectId,
-        ref: "comment"
+        ref: "Comment"
     },
     vedio: {
         type: Schema.Types.ObjectId,
