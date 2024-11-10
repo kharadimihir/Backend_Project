@@ -227,7 +227,7 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
             process.env.REFRESH_TOKEN_SECRET
         );
 
-        const user = await User.findById(decodedToken?.id);
+        const user = await User.findById(decodedToken?._id);
 
         if (!user) {
             throw new ApiError(401, "Invalid Refresh Token");
@@ -299,7 +299,7 @@ const getCurrentUser = asyncHandler(async(req, res) => {
 
 // Update account details
 const updateUserDetails = asyncHandler(async(req, res)=>{
-    let { fullName, email } = req.body;
+    let { fullName, email, username } = req.body;
 
     if(!fullName || !email){
         throw new ApiError(400, "Please give the valid info");
@@ -310,7 +310,8 @@ const updateUserDetails = asyncHandler(async(req, res)=>{
         {
             $set: {
                 fullName: fullName,
-                email: email
+                email: email,
+                username: username
             },
         },
         {
@@ -409,7 +410,7 @@ const getUserChannelProfile = asyncHandler(async(req, res)=>{
             }
         },
         {
-            lookup: {
+            $lookup: {
                 from: "subscriptions",
                 localField: "_id",
                 foreignField: "subscriber",
@@ -424,7 +425,7 @@ const getUserChannelProfile = asyncHandler(async(req, res)=>{
                 subscribedToCoount: {
                     $size: "$subscribedTo"
                 },
-                isSubscribed: {
+                isSubscribe: {
                     $cond: {
                         if: {$in: [req.user?._id, "$subscribers.subscriber"]},
                         then: true,
@@ -442,7 +443,7 @@ const getUserChannelProfile = asyncHandler(async(req, res)=>{
                 coverImage: 1,
                 subscribersCount,
                 subscribersCount,
-                isSubscribed
+                isSubscribe
             }
         }
     ]);
