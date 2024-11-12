@@ -1,7 +1,9 @@
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import  userRouter  from "./routes/user.routers.js"
 const app = express();
+
 
 app.use(cors({
     origin: process.env.CORS_ORIGIN,
@@ -13,8 +15,6 @@ app.use(express.urlencoded({extended: true, limit: "14kb"})); // Because differe
 app.use(express.static("public"));  // For savind some files or data in local system which can be shown by anyone
 app.use(cookieParser());
 
-// import routes
-import userRouter from "./routes/user.routers.js";
 
 
 // routes declaration

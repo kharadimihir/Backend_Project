@@ -13,12 +13,13 @@ const playlistSchema = new Schema({
     vedio: [
         {
             type: Schema.Types.ObjectId,
-            ref: "Vedio"
+            ref: "Video"
         }
     ],
     owner: {
         type: Schema.Types.ObjectId,
-        ref: "User"
+        ref: "User",
+        required: true
     }
 }, {timestamps: true});
 

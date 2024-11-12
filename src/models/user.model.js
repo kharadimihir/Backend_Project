@@ -29,7 +29,7 @@ const userSchema = new Schema({
 
     avatar: {
         type: String, // cloudinary url
-        reqired: true
+        required: true
     },
 
     coverImage: {
@@ -39,7 +39,7 @@ const userSchema = new Schema({
     watchHistory: [
         {
             type: Schema.Types.ObjectId,
-            ref: "Vedio"
+            ref: "Video"
         }
     ],
 
@@ -71,7 +71,7 @@ userSchema.methods.generateAccessToken = function(){
         {
             _id : this._id,
             email: this.email,
-            userName : this.userName,
+            username : this.username,
             fullName: this.fullName
         },
 
