@@ -7,7 +7,7 @@ import mongoose, {isValidObjectId} from "mongoose";
 // How to do like on videos
 const togglevideoLike = asyncHandler(async(req, res) => {
     let { videoId } = req.params;
-
+    
     if (!videoId) {
         throw new ApiError(404, "video ID is required");
     }

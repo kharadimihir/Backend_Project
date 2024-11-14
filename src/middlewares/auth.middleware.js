@@ -32,7 +32,6 @@ import cookieParser from "cookie-parser";
 const verifyJWT = asyncHandler(async (req, res, next) => {
     try {
         const token = req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer ", "");
-
         // If no token is found, respond with Unauthorized
         if (!token) {
             throw new ApiError(401, "Unauthorized Request: No token provided");
