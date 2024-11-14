@@ -1,7 +1,8 @@
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import  userRouter  from "./routes/user.routers.js"
+import userRouter  from "./routes/user.routers.js"
+import videoRouter from "./routes/video.routers.js"
 const app = express();
 
 
@@ -19,6 +20,8 @@ app.use(cookieParser());
 
 // routes declaration
 app.use("/api/v1/users", userRouter)
+app.use("/api/v1/videos", videoRouter)
+
 
 // http://localhost:8000/api/v1/users/register
-export {app} 
+export default app 

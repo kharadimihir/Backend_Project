@@ -62,7 +62,7 @@ const getAllVideos = asyncHandler(async(req, res)=>{
 // How to published a vedio
 const publishedAVideo = asyncHandler(async(req, res)=>{
 
-    const videoFileTypes = /\.(mp4|mkv|avi|mov)$/;
+    const videoFileTypes = /\.mp4$/;
     const thumbnailFileTypes = /\.(jpeg|jpg|png)$/;
 
     let { title, description } = req.body;
@@ -75,19 +75,18 @@ const publishedAVideo = asyncHandler(async(req, res)=>{
         throw new ApiError(400, "Description is required")
     }
 
-
     if (!req.files?.videoFile) {
         throw new ApiError(400, "Video is required")
     }
 
     // Checking Video condtions
-    const videoFilePath = req.files?.videoFile[0]?.path;
+    let videoFilePath = req.files?.videoFile[0]?.path;
 
     if (!req.files?.videoFile || !req.files.videoFile[0]?.path) {
         throw new ApiError(400, "Video file is required");
     }
 
-    const videoFileExtension = path.extname(videoFilePath).toLowerCase();
+    const videoFileExtension = path.extname(req.files?.videoFile[0]?.originalname).toLowerCase();
     const isVideo = videoFileTypes.test(videoFileExtension);
 
     if (!isVideo) {
@@ -95,14 +94,15 @@ const publishedAVideo = asyncHandler(async(req, res)=>{
     }
 
     // Checking Thumbnail condtions
-    const thumbnailFilePath = req.files?.thumbnail[0]?.path;
+    let thumbnailFilePath = req.files?.thumbnail[0]?.path;
 
     if (!req.files?.thumbnail || !req.files.thumbnail[0]?.path) {
         throw new ApiError(400, "Thumbnail file is required");
     }
 
-    const thumbnailFileExtension = path.extname(thumbnailFilePath).toLowerCase();
+    const thumbnailFileExtension = path.extname(req.files?.thumbnail[0]?.originalname).toLowerCase();
     const isThumbnail = thumbnailFileTypes.test(thumbnailFileExtension);
+
 
     if (!isThumbnail) {
         throw new ApiError(400, "Thumbnail extension must be jpeg jpg png")
@@ -131,7 +131,6 @@ const publishedAVideo = asyncHandler(async(req, res)=>{
             duration: videoFile.duration,
             owner: req.user._id,
         });
-    
     
         return res
         .status(200)
@@ -245,7 +244,7 @@ const  getVideoById = asyncHandler(async(req, res)=>{
 // How to update video details
 const updateVideo = asyncHandler(async(req, res)=>{
     const { videoId } = req.params;
-    let { newTitle, newDespcription, newThumbnail } = req.body;
+    let { title, description, thumbnail } = req.body;
 
     if (!videoId || !mongoose.Types.ObjectId.isValid(videoId)) {
         throw new ApiError(400, "Invalid or missing Video ID");
@@ -260,20 +259,20 @@ const updateVideo = asyncHandler(async(req, res)=>{
     // Set updateFields object
     const updateFields = {};
 
-    if(newTitle){
-        updateFields.title = newTitle;
+    if(title){
+        updateFields.title = title;
     }
 
-    if(newDespcription){
-        updateFields.description = newDespcription;
+    if(description){
+        updateFields.description = description;
     }
 
-    if(newThumbnail){
-        const updatedThumbnail = await uploadOnCloudinary(newThumbnail);
+    if(thumbnail){
+        const updatedThumbnail = await uploadOnCloudinary(thumbnail);
         if (!updatedThumbnail) {
             throw new ApiError(400, "Thumnail is not updated yet")
         }
-        updateFields.thumbnail = newThumbnail;
+        updateFields.thumbnail = thumbnail;
     }
 
     if (Object.keys(updateFields).length === 0) {
@@ -317,7 +316,7 @@ const deleteVideo = asyncHandler(async(req, res)=>{
         throw new ApiError(403, "You are not authorized to update this video");
     }
 
-    await Video.findByIdAnddelete(videoId);
+    await Video.findByIdAndDelete(videoId);
     await Like.deleteMany( {video: videoId});
     await Comment.deleteMany( {video: videoId});
 
