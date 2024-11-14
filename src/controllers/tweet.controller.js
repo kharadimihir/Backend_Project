@@ -1,7 +1,8 @@
 import { ApiError } from "../utils/errorsApi.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
-import Tweet from "../models/tweet.model.js"
+import { Tweet } from "../models/tweet.model.js"
+import mongoose from "mongoose";
 
 
 // How to create a new tweet
@@ -28,8 +29,9 @@ const createTweet = asyncHandler(async(req, res)=>{
 
 // How to get all tweets of a particular user
 const getUserTweet = asyncHandler(async(req, res)=>{
-    const userTweet = await Tweet.findById(req.user._id)
-    .sort({createdAt: -1});
+    const userId = new mongoose.Types.ObjectId(req.user._id);
+    const userTweet = await Tweet.findOne({ owner: userId })
+        .sort({ createdAt: -1 });
 
 
     if (!userTweet) {
