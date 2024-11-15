@@ -6,7 +6,8 @@ import videoRouter from "./routes/video.routers.js"
 import tweetRouter from "./routes/tweet.routers.js"
 import likeRouter from "./routes/like.routers.js"
 import PlaylistRouter  from "./routes/playlist.routers.js";
-import commentRouter from "./routes/comment.routers.js"
+import commentRouter from "./routes/comment.routers.js";
+import subscriptionRouter from "./routes/subscription.routers.js"
 const app = express();
 
 
@@ -29,6 +30,7 @@ app.use("/api/v1/tweets", tweetRouter)
 app.use("/api/v1/likes", likeRouter)
 app.use("/api/v1/playlist", PlaylistRouter)
 app.use("/api/v1/comments", commentRouter)
+app.use("/api/v1/subscriptions", subscriptionRouter)
 
 
 // http://localhost:8000/api/v1/users/register
