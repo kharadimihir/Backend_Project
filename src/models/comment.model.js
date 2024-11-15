@@ -14,7 +14,21 @@ const commentSchema = new Schema({
     owner: {
         type: Schema.Types.ObjectId,
         ref: "User"
-    }
+    },
+    isDeleted: {
+        type: Boolean,
+        default: false,
+      },
+      isUpdated: {
+          type: Boolean,
+          default: false,
+        },
+    reply: [
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Comment",
+        },
+      ],
 
 
 },{timestamps: true});

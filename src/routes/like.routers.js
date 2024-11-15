@@ -7,7 +7,7 @@ const router = Router();
 router.use(verifyJWT);
 
 router.post("/toggle/v/:videoId", togglevideoLike)
-router.post("/toggle/:commentId", toggleCommentLike)
+router.post("/toggle/c/:commentId", toggleCommentLike)
 router.post("/toggle/t/:tweetId", toggleTweetLike)
 router.get("/videos", getAllLikedvideos)
 
