@@ -8,6 +8,7 @@ import likeRouter from "./routes/like.routers.js"
 import PlaylistRouter  from "./routes/playlist.routers.js";
 import commentRouter from "./routes/comment.routers.js";
 import subscriptionRouter from "./routes/subscription.routers.js"
+import healthcheckRouter from "./routes/healthcheck.routers.js"
 const app = express();
 
 
@@ -24,6 +25,7 @@ app.use(cookieParser());
 
 
 // routes declaration
+app.use("/api/v1/healthcheck", healthcheckRouter)
 app.use("/api/v1/users", userRouter)
 app.use("/api/v1/videos", videoRouter)
 app.use("/api/v1/tweets", tweetRouter) 
