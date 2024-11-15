@@ -1,4 +1,4 @@
-import { Like } from "../models/like.model";
+import { Like } from "../models/like.model.js";
 import { ApiError } from "../utils/errorsApi.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
@@ -77,13 +77,14 @@ const toggleCommentLike = asyncHandler(async(req, res)=>{
 // How to do like on tweets
 const toggleTweetLike = asyncHandler(async(req, res)=>{
     let { tweetId } = req.params;
+    console.log(tweetId);
 
     if (!tweetId || !isValidObjectId(tweetId)) {
         throw new ApiError(404, "Valid tweet ID is required")
     }
 
     const existingLike = await Like.findOne({
-        tweet: tweetId,
+        _id: tweetId,
         likedBy: req.user._id
     });
 
@@ -94,7 +95,7 @@ const toggleTweetLike = asyncHandler(async(req, res)=>{
         .json(new ApiResponse(200, {}, "Tweet unliked successfully"))
     }else{
         const newLike = await Like.create({
-            tweet: tweetId,
+            _id: tweetId,
             likedBy: req.user._id
         });
 
@@ -157,7 +158,7 @@ const getAllLikedvideos = asyncHandler(async(req, res)=>{
 
     return res
     .status(200)
-    .json(new ApiResponse(200, {likedvideoes}, "Liked vidoes fetched successfully"))
+    .json(new ApiResponse(200, {likedvideos}, "Liked vidoes fetched successfully"))
 });
 
 

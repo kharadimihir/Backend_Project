@@ -4,7 +4,8 @@ import cookieParser from "cookie-parser";
 import userRouter  from "./routes/user.routers.js"
 import videoRouter from "./routes/video.routers.js"
 import tweetRouter from "./routes/tweet.routers.js"
-import likeRouter from "./routes/tweet.routers.js"
+import likeRouter from "./routes/like.routers.js"
+import PlaylistRouter  from "./routes/playlist.routers.js";
 const app = express();
 
 
@@ -23,8 +24,9 @@ app.use(cookieParser());
 // routes declaration
 app.use("/api/v1/users", userRouter)
 app.use("/api/v1/videos", videoRouter)
-app.use("/api/v1/tweets", tweetRouter)
+app.use("/api/v1/tweets", tweetRouter) 
 app.use("/api/v1/likes", likeRouter)
+app.use("/api/v1/playlist", PlaylistRouter)
 
 
 // http://localhost:8000/api/v1/users/register
