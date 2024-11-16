@@ -10,6 +10,7 @@ import commentRouter from "./routes/comment.routers.js";
 import subscriptionRouter from "./routes/subscription.routers.js";
 import healthcheckRouter from "./routes/healthcheck.routers.js";
 import dashboardRouter from "./routes/dashboard.routers.js";
+import shortRouter from "./routes/shorts.routers.js"
 const app = express();
 
 
@@ -35,6 +36,7 @@ app.use("/api/v1/playlist", PlaylistRouter)
 app.use("/api/v1/comments", commentRouter)
 app.use("/api/v1/subscriptions", subscriptionRouter)
 app.use("/api/v1/dashboard", dashboardRouter)
+app.use("/api/v1/shorts", shortRouter)
 
 
 // http://localhost:8000/api/v1/users/register

@@ -20,7 +20,7 @@ const getAllVideos = asyncHandler(async(req, res)=>{
     const { page=1, limit=10, query, sortBy="createdAt", sortType="asc", userId } = req.query;
 
     // Match conditions
-    const matchConditions = { isPublished: true};
+    const matchConditions = { };
     matchConditions.isPublished = true;
 
     if(query){
@@ -298,7 +298,7 @@ const updateVideo = asyncHandler(async(req, res)=>{
 
 });
 
-// // How to delete video
+// How to delete video
 const deleteVideo = asyncHandler(async(req, res)=>{
     const { videoId } = req.params;
     if (!videoId || !mongoose.Types.ObjectId.isValid(videoId)) {
